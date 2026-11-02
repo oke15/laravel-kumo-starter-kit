@@ -1,4 +1,5 @@
-import { DropdownMenu, Sidebar, Text } from '@cloudflare/kumo';
+import { DropdownMenu, LinkProvider, Sidebar, Text } from '@cloudflare/kumo';
+import type { LinkComponentProps } from '@cloudflare/kumo';
 import {
     CaretUpDownIcon,
     CodeIcon,
@@ -6,8 +7,13 @@ import {
     SignOutIcon,
 } from '@phosphor-icons/react';
 import type { Icon } from '@phosphor-icons/react';
-import { router, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
+import type { InertiaLinkProps } from '@inertiajs/react';
+import { forwardRef } from 'react';
 import type { ReactNode } from 'react';
+import { index as dashboardRoute } from '@/actions/App/Http/Controllers/DashboardController';
+import SidebarMenuButton from '@/components/sidebar-menu-button';
+import SidebarMenuCollapsible from '@/components/sidebar-menu-collapsible';
 import { logout } from '@/routes';
 import type { User } from '@/types';
 
@@ -27,10 +33,43 @@ type AccountMenuItem = {
     onSelect?: () => void;
 };
 
+type SidebarNavItem = {
+    label: string;
+    icon?: Icon;
+    href?: string;
+    /** Overrides the automatic active state when provided. */
+    active?: boolean;
+};
+
 /**
  * Placeholder for future account menu items, such as Profile or Settings.
  */
 const accountMenuItems: AccountMenuItem[] = [];
+
+/**
+ * Sidebar navigation data. Add, remove, or reorder items here to change the
+ * sidebar without touching the rendering logic.
+ */
+const HOME: SidebarNavItem[] = [
+    {
+        label: 'Dashboard',
+        icon: HouseIcon,
+        href: dashboardRoute.url(),
+    },
+    {
+        label: 'Dashboard2',
+        icon: HouseIcon,
+        href: dashboardRoute.url(),
+    }
+];
+const ORDERS: SidebarNavItem[] = [
+    {
+        label: 'order',
+        icon: HouseIcon,
+        href: dashboardRoute.url(),
+    },
+];
+
 
 function getUserInitials(name: string): string {
     const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -68,14 +107,15 @@ function UserAvatar({ user }: { user: User }) {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
-    const { auth } = usePage<SharedProps>().props;
-    const user = auth?.user ?? null;
+    const page = usePage<SharedProps>();
+    const user = page.props.auth?.user ?? null;
 
     const handleLogout = () => {
         router.post(logout.url());
     };
 
     return (
+        // <LinkProvider component={InertiaLink}>
         <Sidebar.Provider
             defaultOpen
             peekable
@@ -83,33 +123,9 @@ export default function AppLayout({ children }: AppLayoutProps) {
         >
             <Sidebar>
                 <Sidebar.Content>
-                    <Sidebar.Group>
-                        <Sidebar.GroupLabel>Navigation</Sidebar.GroupLabel>
-                        <Sidebar.Menu>
-                            <Sidebar.MenuButton icon={HouseIcon} active>
-                                Home
-                            </Sidebar.MenuButton>
-                            {/* MenuItem only needed to wrap Collapsible */}
-                            <Sidebar.MenuItem>
-                                <Sidebar.Collapsible>
-                                    <Sidebar.CollapsibleTrigger
-                                        render={
-                                            <Sidebar.MenuButton icon={CodeIcon}>
-                                                Compute <Sidebar.MenuChevron />
-                                            </Sidebar.MenuButton>
-                                        }
-                                    />
-                                    <Sidebar.CollapsibleContent>
-                                        <Sidebar.MenuSub>
-                                            <Sidebar.MenuSubButton>
-                                                Workers
-                                            </Sidebar.MenuSubButton>
-                                        </Sidebar.MenuSub>
-                                    </Sidebar.CollapsibleContent>
-                                </Sidebar.Collapsible>
-                            </Sidebar.MenuItem>
-                        </Sidebar.Menu>
-                    </Sidebar.Group>
+                    {/* home */}
+                    <SidebarMenuButton groupLabel="Home" items={HOME} />
+
                 </Sidebar.Content>
                 <Sidebar.Footer className="gap-2">
                     {user && (
@@ -120,7 +136,9 @@ export default function AppLayout({ children }: AppLayoutProps) {
                                         render={
                                             <Sidebar.MenuButton
                                                 icon={
-                                                    <UserAvatar user={user} />
+                                                    <UserAvatar
+                                                        user={user}
+                                                    />
                                                 }
                                                 className="h-auto min-h-10 py-1"
                                             >
@@ -198,7 +216,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
             <div className="flex min-w-0 flex-1 flex-col">
                 {/* Mobile topbar: the trigger inside the sidebar is unreachable
-                    while the sidebar sheet is closed. */}
+                        while the sidebar sheet is closed. */}
                 <header className="flex h-14 shrink-0 items-center gap-2 border-b border-kumo-line px-2 md:hidden">
                     <Sidebar.Trigger />
                 </header>
@@ -207,5 +225,6 @@ export default function AppLayout({ children }: AppLayoutProps) {
                 </main>
             </div>
         </Sidebar.Provider>
+        // </LinkProvider>
     );
 }
