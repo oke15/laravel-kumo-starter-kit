@@ -1,10 +1,19 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import { login } from '@/routes';
 
 export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />
             <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
+                <div className="mb-4 flex w-full max-w-[335px] justify-end lg:max-w-4xl">
+                    <Link
+                        href={login()}
+                        className="inline-flex items-center rounded-sm border border-[#19140035] px-4 py-1.5 text-sm font-medium text-[#1b1b18] transition-colors hover:border-[#1915014a] hover:bg-[#1b1b180d] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b] dark:hover:bg-[#ffffff14]"
+                    >
+                        Masuk
+                    </Link>
+                </div>
                 <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
                     <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row">
                         <div className="flex-1 rounded-br-lg rounded-bl-lg bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-tl-lg lg:rounded-br-none lg:p-20 dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">

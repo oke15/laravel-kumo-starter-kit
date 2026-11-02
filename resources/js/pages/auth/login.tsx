@@ -1,11 +1,5 @@
 import { Head } from '@inertiajs/react';
-import {
-    Banner,
-    buttonVariants,
-    cn,
-    LayerCard,
-    Text,
-} from '@cloudflare/kumo';
+import { Banner, buttonVariants, cn, LayerCard, Text } from '@cloudflare/kumo';
 import { redirect as googleRedirect } from '@/routes/auth/google';
 
 type LoginProps = {

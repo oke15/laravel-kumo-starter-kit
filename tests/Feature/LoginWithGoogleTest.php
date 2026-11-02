@@ -13,7 +13,7 @@ test('creates a new user when logging in with google', function () {
 
     $response = $this->get(route('auth.google.callback'));
 
-    $response->assertRedirect(route('home'));
+    $response->assertRedirect(route('dashboard'));
 
     $this->assertAuthenticated();
     $this->assertDatabaseHas('users', [
@@ -38,7 +38,7 @@ test('links the google id to an existing user with the same email', function () 
 
     $response = $this->get(route('auth.google.callback'));
 
-    $response->assertRedirect(route('home'));
+    $response->assertRedirect(route('dashboard'));
 
     $this->assertAuthenticatedAs($user);
     $this->assertDatabaseCount('users', 1);
@@ -57,7 +57,7 @@ test('updates the name of an existing user when logging in with google', functio
         'email' => 'jane@example.com',
     ]));
 
-    $this->get(route('auth.google.callback'))->assertRedirect(route('home'));
+    $this->get(route('auth.google.callback'))->assertRedirect(route('dashboard'));
 
     expect($user->fresh()->name)->toBe('Jane Doe');
 });
