@@ -4,6 +4,14 @@ Starter kit **Laravel + Inertia.js + React** dengan antarmuka **Kumo UI** (Cloud
 
 Autentikasi dirancang **tanpa password** (_passwordless_): pengguna masuk dengan **Google OAuth** dan **kode OTP email**. Tidak ada registrasi manual, halaman lupa password, maupun pengelolaan password di aplikasi ini.
 
+## Laravel Installer
+
+```
+laravel new your-app-name --using=oke15/laravel-kumo-starterkit
+```
+
+> rename `your-app-name`
+
 ## Stack
 
 | Lapisan      | Teknologi                                                     |
@@ -176,7 +184,7 @@ Data navigasi didefinisikan di bagian atas `app-layout.tsx`, terpisah dari logik
 ```tsx
 const HOME: SidebarNavItem[] = [
     {
-        label: 'Dashboard',
+        label: "Dashboard",
         icon: HouseIcon,
         href: dashboardRoute.url(),
     },
@@ -195,12 +203,12 @@ Setiap item memiliki bentuk:
 Contoh menambah item datar:
 
 ```tsx
-import { UsersIcon } from '@phosphor-icons/react';
-import { index as usersRoute } from '@/actions/App/Http/Controllers/UserController';
+import { UsersIcon } from "@phosphor-icons/react";
+import { index as usersRoute } from "@/actions/App/Http/Controllers/UserController";
 
 const HOME: SidebarNavItem[] = [
-    { label: 'Dashboard', icon: HouseIcon, href: dashboardRoute.url() },
-    { label: 'Pengguna', icon: UsersIcon, href: usersRoute.url() },
+    { label: "Dashboard", icon: HouseIcon, href: dashboardRoute.url() },
+    { label: "Pengguna", icon: UsersIcon, href: usersRoute.url() },
 ];
 ```
 
