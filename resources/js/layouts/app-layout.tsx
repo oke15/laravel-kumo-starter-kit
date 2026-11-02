@@ -38,18 +38,7 @@ const HOME: SidebarNavItem[] = [
         href: dashboardRoute.url(),
     },
 ];
-const ORDERS: SidebarNavItem[] = [
-    {
-        label: 'order',
-        icon: HouseIcon,
-        href: dashboardRoute.url(),
-    },
-    {
-        label: 'order2',
-        icon: HouseIcon,
-        href: dashboardRoute.url(),
-    },
-];
+
 
 export default function AppLayout({ children }: AppLayoutProps) {
     const page = usePage<SharedProps>();
@@ -64,14 +53,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
         >
             <Sidebar>
                 <Sidebar.Content>
-                    {/* home */}
+                    {/* sidebar here */}
                     <SidebarMenuButton groupLabel="Home" items={HOME} />
-                    {/* orders */}
-                    <SidebarMenuCollapsible
-                        items={ORDERS}
-                        collapseLabel="Order"
-                        collapsibleIcon={ListIcon}
-                    />
                 </Sidebar.Content>
                 <Sidebar.Footer className="gap-2">
                     {user && <SidebarFooter user={user} />}

@@ -154,6 +154,65 @@ routes/web.php                         # Definisi route
 tests/Feature/                         # Feature test
 ```
 
+## Layout dan sidebar
+
+### Layout otomatis
+
+Layout utama ada di `resources/js/layouts/app-layout.tsx` dan dipasang global melalui `resources/js/app.tsx`:
+
+```tsx
+layout: (name) =>
+    name === 'welcome' || name.startsWith('auth/') ? undefined : AppLayout,
+```
+
+Artinya semua halaman di `resources/js/pages` otomatis memakai sidebar. Halaman `welcome` dan halaman di bawah `auth/` dikecualikan agar tampil tanpa sidebar. Halaman tidak perlu mengimpor layout; cukup kembalikan konten dan layout akan merendernya di dalam `<main>`.
+
+Untuk mengecualikan halaman lain, tambahkan kondisinya di `app.tsx`. Untuk memakai layout secara manual pada halaman tertentu, hapus dari callback tersebut lalu bungkus komponen halaman dengan `<AppLayout>`.
+
+### Menambah item sidebar
+
+Data navigasi didefinisikan di bagian atas `app-layout.tsx`, terpisah dari logika render:
+
+```tsx
+const HOME: SidebarNavItem[] = [
+    {
+        label: 'Dashboard',
+        icon: HouseIcon,
+        href: dashboardRoute.url(),
+    },
+];
+```
+
+Setiap item memiliki bentuk:
+
+| Properti | Wajib | Keterangan                                                        |
+| -------- | ----- | ----------------------------------------------------------------- |
+| `label`  | Ya    | Teks yang tampil di sidebar                                       |
+| `href`   | Tidak | URL tujuan. Gunakan fungsi Wayfinder, jangan hardcode URL         |
+| `icon`   | Tidak | Komponen ikon Phosphor (`@phosphor-icons/react`)                  |
+| `active` | Tidak | Paksa status aktif; jika kosong, dihitung otomatis dari pathname |
+
+Contoh menambah item datar:
+
+```tsx
+import { UsersIcon } from '@phosphor-icons/react';
+import { index as usersRoute } from '@/actions/App/Http/Controllers/UserController';
+
+const HOME: SidebarNavItem[] = [
+    { label: 'Dashboard', icon: HouseIcon, href: dashboardRoute.url() },
+    { label: 'Pengguna', icon: UsersIcon, href: usersRoute.url() },
+];
+```
+
+Lalu render dengan komponen yang sesuai:
+
+- `<SidebarMenuButton groupLabel="Home" items={HOME} />` untuk daftar datar. `groupLabel` menjadi judul grup.
+- `<SidebarMenuCollapsible items={ORDERS} collapseLabel="Order" collapsibleIcon={ListIcon} />` untuk grup yang bisa dilipat. `collapseLabel` adalah label pemicu, sedangkan `collapsibleIcon` adalah ikonnya. Sub-item otomatis memakai ikon berukuran kecil dan grup terbuka secara default.
+
+Status aktif dihitung otomatis dengan membandingkan pathname `href` terhadap URL Inertia saat ini. Isi `active` hanya bila satu item harus selalu aktif, misalnya untuk beberapa route yang berbagi menu yang sama. Semua tautan sidebar dinavigasi client-side melalui `KumoInertiaLinkProvider`, jadi pertahankan pembungkus tersebut jika menambah komponen sidebar baru.
+
+Footer sidebar (`sidebar-footer.tsx`) menampilkan avatar, nama, email, dan menu keluar. Item menu akun tambahan dapat didaftarkan di array `accountMenuItems`.
+
 ## Route utama
 
 | Method | URI                     | Nama                   | Keterangan                     |
