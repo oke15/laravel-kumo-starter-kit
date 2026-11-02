@@ -1,4 +1,5 @@
 import { Sidebar } from '@cloudflare/kumo';
+// import { Link } from '@inertiajs/react';
 import type { Icon } from '@phosphor-icons/react';
 
 type item = {
