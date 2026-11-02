@@ -1,5 +1,7 @@
 import { Sidebar } from '@cloudflare/kumo';
+import { usePage } from '@inertiajs/react';
 import type { Icon } from '@phosphor-icons/react';
+import KumoInertiaLinkProvider from '@/components/kumo-inertia-link';
 
 type item = {
     label: string;
@@ -13,19 +15,22 @@ type props = {
     collapseLabel?: string;
     collapsibleIcon?: Icon;
 };
-function getActiveState(href: string | undefined): boolean {
+function getActiveState(
+    href: string | undefined,
+    currentPath: string,
+): boolean {
     if (!href) {
         return false;
     }
-    const currentPath = window.location.pathname;
-    const linkPath = new URL(href, window.location.origin).pathname;
-    return currentPath === linkPath;
+
+    return new URL(href, 'http://localhost').pathname === currentPath;
 }
 
 /**
  * Grouped sidebar navigation. Items with nested `items` render as collapsible
  * sections that auto-open when one of their children is active, while items
- * without children render as direct links.
+ * without children render as direct links. Links navigate client-side through
+ * Inertia.
  */
 export default function SidebarMenuCollapsible({
     items,
@@ -33,43 +38,51 @@ export default function SidebarMenuCollapsible({
     collapseLabel,
     collapsibleIcon,
 }: props) {
+    const { url } = usePage();
+    const currentPath = new URL(url, 'http://localhost').pathname;
+
     return (
-        <Sidebar.Group>
-            <Sidebar.GroupLabel>{groupLabel ?? ''}</Sidebar.GroupLabel>
-            <Sidebar.Menu>
-                <Sidebar.MenuItem>
-                    <Sidebar.Collapsible defaultOpen>
-                        <Sidebar.CollapsibleTrigger
-                            render={
-                                <Sidebar.MenuButton icon={collapsibleIcon}>
-                                    {collapseLabel ?? 'Collapse'}
-                                    <Sidebar.MenuChevron />
-                                </Sidebar.MenuButton>
-                            }
-                        />
-                        <Sidebar.CollapsibleContent>
-                            <Sidebar.MenuSub>
-                                {items.map((item) => (
-                                    <Sidebar.MenuSubItem key={item.label}>
-                                        <Sidebar.MenuSubButton
-                                            href={item.href}
-                                            active={
-                                                item.active ??
-                                                getActiveState(item.href)
-                                            }
-                                        >
-                                            {item.icon && (
-                                                <item.icon className="size-4" />
-                                            )}
-                                            {item.label}
-                                        </Sidebar.MenuSubButton>
-                                    </Sidebar.MenuSubItem>
-                                ))}
-                            </Sidebar.MenuSub>
-                        </Sidebar.CollapsibleContent>
-                    </Sidebar.Collapsible>
-                </Sidebar.MenuItem>
-            </Sidebar.Menu>
-        </Sidebar.Group>
+        <KumoInertiaLinkProvider>
+            <Sidebar.Group>
+                <Sidebar.GroupLabel>{groupLabel ?? ''}</Sidebar.GroupLabel>
+                <Sidebar.Menu>
+                    <Sidebar.MenuItem>
+                        <Sidebar.Collapsible defaultOpen>
+                            <Sidebar.CollapsibleTrigger
+                                render={
+                                    <Sidebar.MenuButton icon={collapsibleIcon}>
+                                        {collapseLabel ?? 'Collapse'}
+                                        <Sidebar.MenuChevron />
+                                    </Sidebar.MenuButton>
+                                }
+                            />
+                            <Sidebar.CollapsibleContent>
+                                <Sidebar.MenuSub>
+                                    {items.map((item) => (
+                                        <Sidebar.MenuSubItem key={item.label}>
+                                            <Sidebar.MenuSubButton
+                                                href={item.href}
+                                                active={
+                                                    item.active ??
+                                                    getActiveState(
+                                                        item.href,
+                                                        currentPath,
+                                                    )
+                                                }
+                                            >
+                                                {item.icon && (
+                                                    <item.icon className="size-4" />
+                                                )}
+                                                {item.label}
+                                            </Sidebar.MenuSubButton>
+                                        </Sidebar.MenuSubItem>
+                                    ))}
+                                </Sidebar.MenuSub>
+                            </Sidebar.CollapsibleContent>
+                        </Sidebar.Collapsible>
+                    </Sidebar.MenuItem>
+                </Sidebar.Menu>
+            </Sidebar.Group>
+        </KumoInertiaLinkProvider>
     );
 }
