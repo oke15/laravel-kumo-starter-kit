@@ -1,11 +1,10 @@
 import { Sidebar } from '@cloudflare/kumo';
-import { HouseIcon, ListIcon } from '@phosphor-icons/react';
+import { HouseIcon } from '@phosphor-icons/react';
 import type { Icon } from '@phosphor-icons/react';
 import { usePage } from '@inertiajs/react';
 import type { ReactNode } from 'react';
 import { index as dashboardRoute } from '@/actions/App/Http/Controllers/DashboardController';
 import SidebarMenuButton from '@/components/sidebar-menu-button';
-import SidebarMenuCollapsible from '@/components/sidebar-menu-collapsible';
 import type { User } from '@/types';
 import SidebarFooter from '@/components/sidebar-footer';
 
@@ -38,7 +37,6 @@ const HOME: SidebarNavItem[] = [
         href: dashboardRoute.url(),
     },
 ];
-
 
 export default function AppLayout({ children }: AppLayoutProps) {
     const page = usePage<SharedProps>();

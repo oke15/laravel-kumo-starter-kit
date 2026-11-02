@@ -185,11 +185,11 @@ const HOME: SidebarNavItem[] = [
 
 Setiap item memiliki bentuk:
 
-| Properti | Wajib | Keterangan                                                        |
-| -------- | ----- | ----------------------------------------------------------------- |
-| `label`  | Ya    | Teks yang tampil di sidebar                                       |
-| `href`   | Tidak | URL tujuan. Gunakan fungsi Wayfinder, jangan hardcode URL         |
-| `icon`   | Tidak | Komponen ikon Phosphor (`@phosphor-icons/react`)                  |
+| Properti | Wajib | Keterangan                                                       |
+| -------- | ----- | ---------------------------------------------------------------- |
+| `label`  | Ya    | Teks yang tampil di sidebar                                      |
+| `href`   | Tidak | URL tujuan. Gunakan fungsi Wayfinder, jangan hardcode URL        |
+| `icon`   | Tidak | Komponen ikon Phosphor (`@phosphor-icons/react`)                 |
 | `active` | Tidak | Paksa status aktif; jika kosong, dihitung otomatis dari pathname |
 
 Contoh menambah item datar:
