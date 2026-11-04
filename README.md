@@ -5,7 +5,7 @@ Starter kit **Laravel + Inertia.js + React** dengan UI **Kumo UI** (Cloudflare) 
 ## Laravel installer
 
 ```
-laravel new your-app-name --using=oke15/laravel-kumo-starterkit
+laravel new your-app-name --using=oke15/laravel-kumo-starter-kit
 ```
 
 ## Stack
