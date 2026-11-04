@@ -19,6 +19,7 @@ declare module '@inertiajs/core' {
         };
         layoutProps: {
             title?: string;
+            breadcrumbs?: { label: string; href?: string }[];
         };
     }
 }

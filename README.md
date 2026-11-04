@@ -184,7 +184,7 @@ Data navigasi didefinisikan di bagian atas `app-layout.tsx`, terpisah dari logik
 ```tsx
 const HOME: SidebarNavItem[] = [
     {
-        label: "Dashboard",
+        label: 'Dashboard',
         icon: HouseIcon,
         href: dashboardRoute.url(),
     },
@@ -203,12 +203,12 @@ Setiap item memiliki bentuk:
 Contoh menambah item datar:
 
 ```tsx
-import { UsersIcon } from "@phosphor-icons/react";
-import { index as usersRoute } from "@/actions/App/Http/Controllers/UserController";
+import { UsersIcon } from '@phosphor-icons/react';
+import { index as usersRoute } from '@/actions/App/Http/Controllers/UserController';
 
 const HOME: SidebarNavItem[] = [
-    { label: "Dashboard", icon: HouseIcon, href: dashboardRoute.url() },
-    { label: "Pengguna", icon: UsersIcon, href: usersRoute.url() },
+    { label: 'Dashboard', icon: HouseIcon, href: dashboardRoute.url() },
+    { label: 'Pengguna', icon: UsersIcon, href: usersRoute.url() },
 ];
 ```
 

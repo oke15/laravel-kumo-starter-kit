@@ -1,8 +1,24 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script>
+            (function () {
+                try {
+                    const stored = localStorage.getItem('theme');
+                    const dark = stored
+                        ? stored === 'dark'
+                        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                    document.documentElement.dataset.mode = dark ? 'dark' : 'light';
+                    document.documentElement.classList.toggle('dark', dark);
+                } catch (error) {
+                    // Storage can be unavailable; fall back to the light theme.
+                }
+            })();
+        </script>
 
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
