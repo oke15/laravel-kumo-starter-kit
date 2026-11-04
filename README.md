@@ -2,6 +2,12 @@
 
 Starter kit **Laravel + Inertia.js + React** dengan UI **Kumo UI** (Cloudflare) dan autentikasi **tanpa password** (Google OAuth). Cocok untuk membangun aplikasi dashboard modern tanpa kompleksitas SPA.
 
+## Laravel installer
+
+```
+laravel new your-app-name --using=oke15/laravel-kumo-starterkit
+```
+
 ## Stack
 
 - **Backend:** Laravel 13, PHP 8.5
