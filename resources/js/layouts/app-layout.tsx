@@ -59,7 +59,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                     <Sidebar.Trigger />
                 </Sidebar.Footer>
             </Sidebar>
-            <div className="flex min-w-0 flex-1 flex-col">
+            <div className="flex min-w-0 flex-1 flex-col bg-kumo-canvas text-kumo-default">
                 {/* Mobile topbar: the trigger inside the sidebar is unreachable
                         while the sidebar sheet is closed. */}
                 <header className="flex h-14 shrink-0 items-center gap-2 border-b border-kumo-line px-2 md:hidden">

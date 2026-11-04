@@ -1,54 +1,88 @@
-import { Button } from '@cloudflare/kumo';
-import { MoonIcon, SunIcon } from '@phosphor-icons/react';
+import { Button, DropdownMenu } from '@cloudflare/kumo';
+import { MonitorIcon, MoonIcon, SunIcon } from '@phosphor-icons/react';
+import type { Icon } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
+import {
+    applyTheme,
+    getStoredTheme,
+    subscribeToSystemTheme,
+} from '@/lib/theme';
+import type { Theme } from '@/lib/theme';
 
-type Theme = 'light' | 'dark';
+type ThemeOption = {
+    label: string;
+    icon: Icon;
+};
 
-const STORAGE_KEY = 'theme';
+const THEME_OPTIONS: Record<Theme, ThemeOption> = {
+    light: { label: 'Terang', icon: SunIcon },
+    dark: { label: 'Gelap', icon: MoonIcon },
+    system: { label: 'Ikuti perangkat', icon: MonitorIcon },
+};
 
-function applyTheme(theme: Theme): void {
-    const root = document.documentElement;
-
-    root.dataset.mode = theme;
-    root.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem(STORAGE_KEY, theme);
-}
+const THEME_ORDER: Theme[] = ['light', 'dark', 'system'];
 
 type ThemeToggleProps = {
     className?: string;
 };
 
 /**
- * Toggles between light and dark mode. Kumo tokens read the `data-mode`
- * attribute, while the `dark` class keeps Tailwind `dark:` utilities in sync.
+ * Theme picker offering light, dark, and device preference. The `system`
+ * option keeps following the device colour scheme until the user picks an
+ * explicit theme.
  */
 export default function ThemeToggle({ className }: ThemeToggleProps = {}) {
-    const [theme, setTheme] = useState<Theme>('light');
+    const [theme, setTheme] = useState<Theme>('system');
 
     useEffect(() => {
-        setTheme(
-            document.documentElement.dataset.mode === 'dark' ? 'dark' : 'light',
-        );
+        setTheme(getStoredTheme());
     }, []);
 
-    const handleToggle = () => {
-        const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark';
+    useEffect(() => {
+        if (theme !== 'system') {
+            return;
+        }
 
-        setTheme(nextTheme);
-        applyTheme(nextTheme);
+        return subscribeToSystemTheme(() => {
+            applyTheme('system');
+        });
+    }, [theme]);
+
+    const handleSelect = (value: Theme) => {
+        setTheme(value);
+        applyTheme(value);
     };
 
-    const label =
-        theme === 'dark' ? 'Aktifkan tema terang' : 'Aktifkan tema gelap';
-
     return (
-        <Button
-            variant="ghost"
-            shape="square"
-            icon={theme === 'dark' ? SunIcon : MoonIcon}
-            aria-label={label}
-            className={className}
-            onClick={handleToggle}
-        />
+        <DropdownMenu>
+            <DropdownMenu.Trigger
+                render={
+                    <Button
+                        variant="ghost"
+                        shape="square"
+                        icon={THEME_OPTIONS[theme].icon}
+                        aria-label={`Tema: ${THEME_OPTIONS[theme].label}`}
+                        className={className}
+                    />
+                }
+            />
+            <DropdownMenu.Content align="end">
+                <DropdownMenu.RadioGroup
+                    value={theme}
+                    onValueChange={(value) => handleSelect(value as Theme)}
+                >
+                    {THEME_ORDER.map((value) => (
+                        <DropdownMenu.RadioItem
+                            key={value}
+                            value={value}
+                            icon={THEME_OPTIONS[value].icon}
+                        >
+                            {THEME_OPTIONS[value].label}
+                            <DropdownMenu.RadioItemIndicator />
+                        </DropdownMenu.RadioItem>
+                    ))}
+                </DropdownMenu.RadioGroup>
+            </DropdownMenu.Content>
+        </DropdownMenu>
     );
 }

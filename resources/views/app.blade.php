@@ -8,9 +8,11 @@
             (function () {
                 try {
                     const stored = localStorage.getItem('theme');
-                    const dark = stored
-                        ? stored === 'dark'
-                        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    const prefersDark = window.matchMedia(
+                        '(prefers-color-scheme: dark)',
+                    ).matches;
+                    const dark =
+                        stored === 'dark' || (stored !== 'light' && prefersDark);
 
                     document.documentElement.dataset.mode = dark ? 'dark' : 'light';
                     document.documentElement.classList.toggle('dark', dark);

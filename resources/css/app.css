@@ -13,3 +13,55 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 }
+
+/*
+ * Softened dark mode.
+ *
+ * Kumo's default dark surfaces are very dark (canvas ~oklch(10%)).
+ * These overrides raise the lightness of each surface token by roughly
+ * 8 points while preserving their relative ordering. Only dark mode is
+ * touched; light mode keeps Kumo's defaults. Tune the values below to
+ * taste.
+ */
+/* :root[data-mode='dark'] {
+    --color-kumo-canvas: oklch(18% 0 0);
+    --color-kumo-elevated: oklch(20% 0 0);
+    --color-kumo-recessed: oklch(22% 0 0);
+    --color-kumo-base: oklch(24% 0 0);
+    --color-kumo-control: oklch(28% 0 0);
+    --color-kumo-overlay: oklch(32% 0 0);
+    --color-kumo-tint: oklch(32% 0 0);
+    --color-kumo-fill: oklch(32% 0 0);
+    --color-kumo-hairline: oklch(32% 0 0);
+    --color-kumo-line: oklch(37% 0 0);
+    --color-kumo-fill-hover: oklch(42% 0 0);
+    --color-kumo-interact: oklch(42% 0 0);
+    --color-kumo-arrow-stroke: oklch(37% 0 0);
+} */
+
+/*
+ * Alternative: "GitHub soft dark" (dimmed) palette.
+ *
+ * To try it, comment out the softened block above and uncomment the
+ * block below. It mirrors GitHub's dark dimmed theme, which uses a
+ * blue-grey cast (hue ~257) instead of neutral grey. Lightness is the
+ * single knob per surface: raise the percentage to lighten it. Values
+ * are ordered canvas < elevated < recessed < base < control < overlay
+ * < line < fill-hover, matching Kumo's dark surface hierarchy.
+ */
+
+:root[data-mode='dark'] {
+    --color-kumo-canvas: oklch(31.5% 0.018 258);
+    --color-kumo-elevated: oklch(34% 0.019 258);
+    --color-kumo-recessed: oklch(36.5% 0.019 257);
+    --color-kumo-base: oklch(38.5% 0.019 257);
+    --color-kumo-control: oklch(41% 0.02 257);
+    --color-kumo-overlay: oklch(43% 0.021 257);
+    --color-kumo-tint: oklch(43% 0.021 257);
+    --color-kumo-fill: oklch(43% 0.021 257);
+    --color-kumo-hairline: oklch(43% 0.021 257);
+    --color-kumo-line: oklch(47% 0.022 256);
+    --color-kumo-fill-hover: oklch(50% 0.024 256);
+    --color-kumo-interact: oklch(50% 0.024 256);
+    --color-kumo-arrow-stroke: oklch(47% 0.022 256);
+}

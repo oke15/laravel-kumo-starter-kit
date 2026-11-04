@@ -13,7 +13,7 @@ export default function Dashboard() {
     return (
         <>
             <Head title="Dashboard" />
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+            <div className="mx-auto flex w-full flex-col gap-6">
                 <div className="grid gap-1.5">
                     <Text as="h2" variant="heading" size="lg">
                         Selamat datang

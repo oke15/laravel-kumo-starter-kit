@@ -83,7 +83,7 @@ export default function HeaderLayout({
                     </div>
                 </header>
 
-                <div className="border-b border-kumo-line bg-kumo-base">
+                <div className="border-b border-kumo-line bg-kumo-recessed">
                     <div className="px-4 py-1 md:px-6">
                         <HeaderBreadcrumbs
                             title={title}
@@ -92,7 +92,7 @@ export default function HeaderLayout({
                     </div>
                 </div>
 
-                <main className="min-w-0 flex-1 px-4 py-6 md:px-6">
+                <main className="min-w-0 flex-1 overflow-y-auto bg-kumo-canvas px-4 py-6 md:px-6">
                     {children}
                 </main>
             </div>
