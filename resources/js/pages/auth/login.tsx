@@ -1,6 +1,8 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Banner, buttonVariants, cn, LayerCard, Text } from '@cloudflare/kumo';
 import { redirect as googleRedirect } from '@/routes/auth/google';
+import { show as otpShow } from '@/routes/otp';
+import { KeyIcon } from '@phosphor-icons/react';
 
 type LoginProps = {
     flash?: {
@@ -43,7 +45,7 @@ export default function Login({ flash }: LoginProps) {
                             Masuk ke akun Anda
                         </Text>
                         <Text variant="secondary">
-                            Gunakan akun Google untuk melanjutkan.
+                            Gunakan akun Google atau OTP untuk melanjutkan.
                         </Text>
                     </div>
 
@@ -73,6 +75,23 @@ export default function Login({ flash }: LoginProps) {
                             Masuk dengan Google
                         </a>
 
+                        <div className="pt-4 text-center">
+                            <Text variant="secondary">
+                                <Link
+                                    href={otpShow.url()}
+                                    className={cn(
+                                        buttonVariants({
+                                            variant: 'secondary',
+                                            size: 'lg',
+                                        }),
+                                        'w-full justify-center text-sm',
+                                    )}
+                                >
+                                    <KeyIcon />
+                                    Masuk dengan kode OTP
+                                </Link>
+                            </Text>
+                        </div>
                         <div className="mt-4 text-center">
                             <Text variant="secondary">
                                 Akun akan dibuat otomatis saat pertama kali
