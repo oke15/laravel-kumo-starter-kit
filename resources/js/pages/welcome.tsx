@@ -1,104 +1,179 @@
 import { Head, Link } from '@inertiajs/react';
+import { ArrowSquareOutIcon, GithubLogoIcon } from '@phosphor-icons/react';
+import { CloudflareLogo, Text, buttonVariants, cn } from '@cloudflare/kumo';
 import { login } from '@/routes';
+import type { ReactNode } from 'react';
+
+/** Laravel logomark (the "L" glyph from Laravel's brand logo). */
+function LaravelMark({ className }: { className?: string }) {
+    return (
+        <svg
+            className={className}
+            viewBox="0 0 40 42"
+            fill="#ff2d20"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M17.2 5.63325L8.6 0.855469L0 5.63325V32.1434L16.2 41.1434L32.4 32.1434V23.699L40 19.4767V9.85547L31.4 5.07769L22.8 9.85547V18.2999L17.2 21.411V5.63325ZM38 18.2999L32.4 21.411V15.2545L38 12.1434V18.2999ZM36.9409 10.4439L31.4 13.5221L25.8591 10.4439L31.4 7.36561L36.9409 10.4439ZM24.8 18.2999V12.1434L30.4 15.2545V21.411L24.8 18.2999ZM23.8 20.0323L29.3409 23.1105L16.2 30.411L10.6591 27.3328L23.8 20.0323ZM7.6 27.9212L15.2 32.1434V38.2999L2 30.9666V7.92116L7.6 11.0323V27.9212ZM8.6 9.29991L3.05913 6.22165L8.6 3.14339L14.1409 6.22165L8.6 9.29991ZM30.4 24.8101L17.2 32.1434V38.2999L30.4 30.9666V24.8101ZM9.6 11.0323L15.2 7.92117V22.5221L9.6 25.6333V11.0323Z"
+            />
+        </svg>
+    );
+}
+
+/** Inertia.js logomark (the chevrons from the Inertia wordmark). */
+function InertiaMark({ className }: { className?: string }) {
+    return (
+        <svg
+            viewBox="84 6 25.5 14.5"
+            className={className}
+            fill="#9553E9"
+            aria-hidden="true"
+        >
+            <path d="M91.5651 6.37624H84.5156L91.3275 13.1881L84.5156 20H91.5651L98.377 13.1881L91.5651 6.37624Z" />
+            <path d="M102.218 6.37624H95.1689L101.981 13.1881L95.1689 20H102.218L109.03 13.1881L102.218 6.37624Z" />
+        </svg>
+    );
+}
+
+/** React logomark. */
+function ReactMark({ className }: { className?: string }) {
+    return (
+        <svg
+            viewBox="-11.5 -10.23 23 20.46"
+            className={className}
+            aria-hidden="true"
+        >
+            <circle r="2.05" fill="#61DAFB" />
+            <g stroke="#61DAFB" strokeWidth="1" fill="none">
+                <ellipse rx="11" ry="4.2" />
+                <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+                <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+            </g>
+        </svg>
+    );
+}
+
+/** The stack this starter kit is built on, in the order data flows. */
+const stack: { name: string; role: string; href: string; icon: ReactNode }[] = [
+    {
+        name: 'Laravel',
+        role: 'Backend & routing',
+        href: 'https://laravel.com/docs',
+        icon: <LaravelMark className="h-4 w-auto" />,
+    },
+    {
+        name: 'Inertia.js',
+        role: 'Modern monolith',
+        href: 'https://inertiajs.com',
+        icon: <InertiaMark className="h-3.5 w-auto" />,
+    },
+    {
+        name: 'React 19',
+        role: 'Frontend UI',
+        href: 'https://react.dev',
+        icon: <ReactMark className="size-4" />,
+    },
+    {
+        name: 'Kumo UI',
+        role: 'Component library',
+        href: 'https://kumo-ui.com',
+        icon: <CloudflareLogo variant="glyph" className="h-4 w-auto" />,
+    },
+];
 
 export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />
-            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
-                <div className="mb-4 flex w-full max-w-[335px] justify-end lg:max-w-4xl">
+            <div className="flex min-h-screen flex-col bg-kumo-canvas text-kumo-default">
+                <header className="mx-auto flex w-full max-w-4xl items-center justify-between gap-4 px-6 pt-6 pb-2">
+                    <div className="flex items-center gap-2">
+                        <CloudflareLogo
+                            variant="glyph"
+                            className="h-5 w-auto"
+                        />
+                        <Text as="span" bold truncate>
+                            Laravel Kumo Starter Kit
+                        </Text>
+                    </div>
                     <Link
                         href={login()}
-                        className="inline-flex items-center rounded-sm border border-[#19140035] px-4 py-1.5 text-sm font-medium text-[#1b1b18] transition-colors hover:border-[#1915014a] hover:bg-[#1b1b180d] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b] dark:hover:bg-[#ffffff14]"
+                        className={cn(
+                            buttonVariants({
+                                variant: 'secondary',
+                                size: 'sm',
+                            }),
+                            'text-sm',
+                        )}
                     >
                         Masuk
                     </Link>
-                </div>
-                <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-                    <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row">
-                        <div className="flex-1 rounded-br-lg rounded-bl-lg bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-tl-lg lg:rounded-br-none lg:p-20 dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">
-                            <h1 className="mb-1 font-medium">
-                                Let's get started
-                            </h1>
-                            <p className="mb-2 text-[#706f6c] dark:text-[#A1A09A]">
-                                Laravel has an incredibly rich ecosystem.
-                                <br />
-                                We suggest starting with the following.
-                            </p>
-                            <ul className="mb-4 flex flex-col lg:mb-6">
-                                <li className="relative flex items-center gap-4 py-2 before:absolute before:top-1/2 before:bottom-0 before:left-[0.4rem] before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A]">
-                                    <span className="relative bg-white py-1 dark:bg-[#161615]">
-                                        <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-[#e3e3e0] bg-[#FDFDFC] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] dark:border-[#3E3E3A] dark:bg-[#161615]">
-                                            <span className="h-1.5 w-1.5 rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A]" />
-                                        </span>
-                                    </span>
-                                    <span>
-                                        Read the
+                </header>
+
+                <div className="flex flex-1 items-center justify-center px-6 py-8">
+                    <main className="flex w-full max-w-md flex-col-reverse lg:max-w-4xl lg:flex-row">
+                        <div className="flex-1 rounded-br-lg rounded-bl-lg bg-kumo-base p-6 pb-10 ring ring-kumo-line lg:rounded-tl-lg lg:rounded-br-none lg:rounded-bl-lg lg:p-12">
+                            <div className="mb-5 flex items-center gap-3">
+                                <CloudflareLogo
+                                    variant="full"
+                                    className="h-8 w-auto"
+                                />
+                                <span
+                                    className="text-kumo-subtle"
+                                    aria-hidden="true"
+                                >
+                                    ×
+                                </span>
+                                <LaravelMark className="h-7 w-auto" />
+                            </div>
+
+                            <div className="mb-5 grid gap-1.5">
+                                <Text as="h1" variant="heading" size="lg">
+                                    Laravel Kumo Starter Kit
+                                </Text>
+                                <Text variant="secondary">
+                                    Laravel, Inertia.js, dan React dipadukan
+                                    dengan Kumo UI (Component Library dari
+                                    Cloudflare).
+                                </Text>
+                            </div>
+
+                            <div className="mb-2">
+                                <Text variant="secondary">
+                                    Tumpukan teknologi
+                                </Text>
+                            </div>
+                            <ul className="mb-6 grid gap-2 sm:grid-cols-1">
+                                {stack.map((item) => (
+                                    <li key={item.name}>
                                         <a
-                                            href="https://laravel.com/docs"
+                                            href={item.href}
                                             target="_blank"
-                                            className="ml-1 inline-flex items-center space-x-1 font-medium text-[#f53003] underline underline-offset-4 dark:text-[#FF4433]"
+                                            rel="noreferrer noopener"
+                                            className="group flex items-center gap-3 rounded-lg bg-kumo-recessed px-3 py-2 transition-colors hover:bg-kumo-tint"
                                         >
-                                            <span>Documentation</span>
-                                            <svg
-                                                width={10}
-                                                height={11}
-                                                viewBox="0 0 10 11"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-2.5 w-2.5"
-                                            >
-                                                <path
-                                                    d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                                    stroke="currentColor"
-                                                    strokeLinecap="square"
-                                                />
-                                            </svg>
+                                            <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-kumo-base ring ring-kumo-hairline">
+                                                {item.icon}
+                                            </span>
+                                            <span className="grid min-w-0 flex-1 gap-0.5">
+                                                <Text as="span" bold truncate>
+                                                    {item.name}
+                                                </Text>
+                                                <Text
+                                                    as="span"
+                                                    variant="secondary"
+                                                    size="sm"
+                                                    truncate
+                                                >
+                                                    {item.role}
+                                                </Text>
+                                            </span>
+                                            <ArrowSquareOutIcon className="size-3.5 shrink-0 text-kumo-subtle opacity-0 transition-opacity group-hover:opacity-100" />
                                         </a>
-                                    </span>
-                                </li>
-                                <li className="relative flex items-center gap-4 py-2 before:absolute before:top-0 before:bottom-1/2 before:left-[0.4rem] before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A]">
-                                    <span className="relative bg-white py-1 dark:bg-[#161615]">
-                                        <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-[#e3e3e0] bg-[#FDFDFC] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] dark:border-[#3E3E3A] dark:bg-[#161615]">
-                                            <span className="h-1.5 w-1.5 rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A]" />
-                                        </span>
-                                    </span>
-                                    <span>
-                                        Watch video tutorials at
-                                        <a
-                                            href="https://laracasts.com"
-                                            target="_blank"
-                                            className="ml-1 inline-flex items-center space-x-1 font-medium text-[#f53003] underline underline-offset-4 dark:text-[#FF4433]"
-                                        >
-                                            <span>Laracasts</span>
-                                            <svg
-                                                width={10}
-                                                height={11}
-                                                viewBox="0 0 10 11"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-2.5 w-2.5"
-                                            >
-                                                <path
-                                                    d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                                    stroke="currentColor"
-                                                    strokeLinecap="square"
-                                                />
-                                            </svg>
-                                        </a>
-                                    </span>
-                                </li>
-                            </ul>
-                            <ul className="flex gap-3 text-sm leading-normal">
-                                <li>
-                                    <a
-                                        href="https://cloud.laravel.com"
-                                        target="_blank"
-                                        className="inline-block rounded-sm border border-black bg-[#1b1b18] px-5 py-1.5 text-sm leading-normal text-white hover:border-black hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:border-white dark:hover:bg-white"
-                                    >
-                                        Deploy now
-                                    </a>
-                                </li>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                         <div className="relative -mb-px aspect-[335/364] w-full shrink-0 overflow-hidden rounded-t-lg bg-[#fff2f2] lg:mb-0 lg:-ml-px lg:aspect-auto lg:w-[438px] lg:rounded-t-none lg:rounded-r-lg dark:bg-[#1D0002]">
@@ -356,10 +431,26 @@ export default function Welcome() {
                                     />
                                 </g>
                             </svg>
+
                             <div className="absolute inset-0 rounded-t-lg shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-t-none lg:rounded-r-lg dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]"></div>
                         </div>
                     </main>
                 </div>
+
+                <footer className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-3 px-6 pb-8">
+                    <Text variant="secondary" size="sm">
+                        Laravel 13 · Inertia.js v3 · React 19 · Kumo UI
+                    </Text>
+                    <a
+                        href="https://github.com/oke15/laravel-kumo-starter-kit"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="inline-flex items-center gap-1.5 text-sm text-kumo-subtle transition-colors hover:text-kumo-default"
+                    >
+                        <GithubLogoIcon className="size-4" />
+                        oke15/laravel-kumo-starter-kit
+                    </a>
+                </footer>
             </div>
         </>
     );

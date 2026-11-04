@@ -1,5 +1,7 @@
 # Laravel Kumo Starter Kit
 
+![Laravel Kumo Starter Kit](/docs/img/wellcome.png)
+
 Starter kit **Laravel + Inertia.js + React** dengan UI **Kumo UI** (Cloudflare) dan autentikasi **tanpa password** (Google OAuth). Cocok untuk membangun aplikasi dashboard modern tanpa kompleksitas SPA.
 
 ## Laravel installer
@@ -64,6 +66,18 @@ pnpm install && pnpm run build
 ```bash
 php artisan test --compact
 ```
+
+## Contoh Halaman
+
+### Masuk
+
+| Login dengan Google atau OTP | Masuk dengan kode sekali pakai |
+| --- | --- |
+| ![Halaman masuk](/docs/img/login.png) | ![Masuk dengan kode OTP](/docs/img/login-otp.png) |
+
+### Dashboard
+
+![Dashboard dengan sidebar responsif](/docs/img/sidebar-dashboard.png)
 
 ## Lisensi
 
