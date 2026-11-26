@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Notification;
 use Inertia\Testing\AssertableInertia as Assert;
 use Spatie\OneTimePasswords\Notifications\OneTimePasswordNotification;
 
-test('renders the one-time password request page', function () {
-    $this->get(route('otp.show'))
+test('renders the login page with the one-time password request form', function () {
+    $this->get(route('login'))
         ->assertOk()
-        ->assertInertia(fn (Assert $page) => $page->component('auth/request-one-time-password'));
+        ->assertInertia(fn (Assert $page) => $page->component('auth/login'));
 });
 
 test('renders the one-time password verification page for a given email', function () {
@@ -19,17 +19,13 @@ test('renders the one-time password verification page for a given email', functi
             ->where('email', 'jane@example.com'));
 });
 
-test('redirects to the request page when verifying without an email', function () {
+test('redirects to the login page when verifying without an email', function () {
     $this->get(route('otp.verify.show'))
-        ->assertRedirect(route('otp.show'));
+        ->assertRedirect(route('login'));
 });
 
-test('redirects authenticated users away from the one-time password pages', function () {
+test('redirects authenticated users away from the one-time password verification page', function () {
     $user = User::factory()->create();
-
-    $this->actingAs($user)
-        ->get(route('otp.show'))
-        ->assertRedirect(route('dashboard'));
 
     $this->actingAs($user)
         ->get(route('otp.verify.show', ['email' => $user->email]))

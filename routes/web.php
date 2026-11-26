@@ -11,7 +11,6 @@ Route::inertia('/', 'welcome')->name('home');
 Route::get('/login', [AuthController::class, 'viewLogin'])->middleware('guest')->name('login');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/otp', [OneTimePasswordController::class, 'showRequest'])->name('otp.show');
     Route::post('/otp/send', [OneTimePasswordController::class, 'send'])->middleware('throttle:6,1')->name('otp.send');
     Route::get('/otp/verify', [OneTimePasswordController::class, 'showVerify'])->name('otp.verify.show');
     Route::post('/otp/verify', [OneTimePasswordController::class, 'verify'])->name('otp.verify.store');

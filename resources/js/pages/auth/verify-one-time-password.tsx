@@ -5,7 +5,7 @@ import {
     send,
     verify,
 } from '@/actions/App/Http/Controllers/Auth/OneTimePasswordController';
-import { show as otpShow } from '@/routes/otp';
+import { login } from '@/routes';
 
 type VerifyOneTimePasswordProps = {
     email: string;
@@ -123,7 +123,7 @@ export default function VerifyOneTimePassword({
 
                                 <Text variant="secondary">
                                     <Link
-                                        href={otpShow.url()}
+                                        href={login.url()}
                                         className="text-kumo-strong underline-offset-2 hover:underline"
                                     >
                                         Gunakan email lain

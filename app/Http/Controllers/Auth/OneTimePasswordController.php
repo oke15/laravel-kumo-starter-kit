@@ -15,14 +15,6 @@ use Spatie\OneTimePasswords\Rules\OneTimePasswordRule;
 class OneTimePasswordController extends Controller
 {
     /**
-     * Show the page where a user requests a one-time password.
-     */
-    public function showRequest(): Response
-    {
-        return inertia('auth/request-one-time-password');
-    }
-
-    /**
      * Send a one-time password to the user with the given email address.
      */
     public function send(Request $request): RedirectResponse
@@ -51,7 +43,7 @@ class OneTimePasswordController extends Controller
         $email = $request->string('email')->toString();
 
         if (blank($email)) {
-            return redirect()->route('otp.show');
+            return redirect()->route('login');
         }
 
         return inertia('auth/verify-one-time-password', [
