@@ -1,8 +1,16 @@
-import { Head, Link } from '@inertiajs/react';
-import { Banner, buttonVariants, cn, LayerCard, Text } from '@cloudflare/kumo';
+import { Head, useForm } from '@inertiajs/react';
+import {
+    Banner,
+    Button,
+    Input,
+    buttonVariants,
+    cn,
+    LayerCard,
+    Text,
+} from '@cloudflare/kumo';
+import type { SubmitEvent } from 'react';
+import { send } from '@/actions/App/Http/Controllers/Auth/OneTimePasswordController';
 import { redirect as googleRedirect } from '@/routes/auth/google';
-import { show as otpShow } from '@/routes/otp';
-import { KeyIcon } from '@phosphor-icons/react';
 
 type LoginProps = {
     flash?: {
@@ -34,6 +42,16 @@ function GoogleIcon() {
 }
 
 export default function Login({ flash }: LoginProps) {
+    const form = useForm({ email: '' });
+
+    function submit(event: SubmitEvent) {
+        event.preventDefault();
+
+        form.post(send.url(), {
+            preserveScroll: true,
+        });
+    }
+
     return (
         <>
             <Head title="Masuk" />
@@ -75,23 +93,40 @@ export default function Login({ flash }: LoginProps) {
                             Masuk dengan Google
                         </a>
 
-                        <div className="pt-4 text-center">
-                            <Text variant="secondary">
-                                <Link
-                                    href={otpShow.url()}
-                                    className={cn(
-                                        buttonVariants({
-                                            variant: 'secondary',
-                                            size: 'lg',
-                                        }),
-                                        'w-full justify-center text-sm',
-                                    )}
-                                >
-                                    <KeyIcon />
-                                    Masuk dengan kode OTP
-                                </Link>
+                        <div className="my-5 flex items-center gap-3">
+                            <div className="h-px flex-1 bg-kumo-line" />
+                            <Text variant="secondary" size="sm">
+                                atau
                             </Text>
+                            <div className="h-px flex-1 bg-kumo-line" />
                         </div>
+
+                        <form onSubmit={submit} className="flex flex-col gap-4">
+                            <Input
+                                label="Email"
+                                type="email"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                                placeholder="anda@contoh.com"
+                                value={form.data.email}
+                                onChange={(event) =>
+                                    form.setData('email', event.target.value)
+                                }
+                                error={form.errors.email}
+                            />
+
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                size="lg"
+                                className="w-full justify-center text-sm"
+                                disabled={form.processing}
+                            >
+                                {form.processing ? 'Mengirim...' : 'Kirim kode'}
+                            </Button>
+                        </form>
+
                         <div className="mt-4 text-center">
                             <Text variant="secondary">
                                 Akun akan dibuat otomatis saat pertama kali
