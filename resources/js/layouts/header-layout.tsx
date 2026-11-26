@@ -56,7 +56,7 @@ export default function HeaderLayout({
         <KumoInertiaLinkProvider>
             <div className="flex min-h-dvh flex-col bg-kumo-base text-kumo-default">
                 <header className="sticky top-0 z-40 border-b border-kumo-line bg-kumo-base">
-                    <div className="flex h-14 w-full items-center gap-2 px-4 md:px-6">
+                    <div className="mx-auto flex h-14 w-full max-w-7xl items-center gap-2 px-4 md:px-6">
                         <LinkButton
                             href={dashboard.url()}
                             variant="ghost"
@@ -84,7 +84,7 @@ export default function HeaderLayout({
                 </header>
 
                 <div className="border-b border-kumo-line bg-kumo-recessed">
-                    <div className="px-4 py-1 md:px-6">
+                    <div className="mx-auto w-full max-w-7xl px-4 py-1 md:px-6">
                         <HeaderBreadcrumbs
                             title={title}
                             breadcrumbs={breadcrumbs}
@@ -92,8 +92,10 @@ export default function HeaderLayout({
                     </div>
                 </div>
 
-                <main className="min-w-0 flex-1 overflow-y-auto bg-kumo-canvas px-4 py-6 md:px-6">
-                    {children}
+                <main className="min-w-0 flex-1 overflow-y-auto bg-kumo-canvas">
+                    <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6">
+                        {children}
+                    </div>
                 </main>
             </div>
         </KumoInertiaLinkProvider>

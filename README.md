@@ -71,8 +71,8 @@ php artisan test --compact
 
 ### Masuk
 
-| Login dengan Google atau OTP | Masuk dengan kode sekali pakai |
-| --- | --- |
+| Login dengan Google atau OTP          | Masuk dengan kode sekali pakai                    |
+| ------------------------------------- | ------------------------------------------------- |
 | ![Halaman masuk](/docs/img/login.png) | ![Masuk dengan kode OTP](/docs/img/login-otp.png) |
 
 ### Dashboard
